@@ -1,15 +1,23 @@
-[
-    {
-        "name": "$CONTAINER_NAME",
-        "image": "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG",
-        "cpu": 1,
-        "memory": 2,
-        "memoryReservation": 1,
-        "portMappings": [
-            {
-                "containerPort": 8000
-            }
-        ],
-        "essential": true
-    }
-]
+{
+    "family": "$ECS_TASK_DEFINITION",
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+        {
+            "name": "my-container",
+            "image": "your-container-image-url",
+            "cpu": 1,
+            "memory": 2,
+            "memoryReservation": 1,
+            "portMappings": [
+                {
+                    "containerPort": 8000
+                }
+            ],
+            "essential": true,
+            "command": [
+                "echo",
+                "command properly passed!"
+            ]
+        }
+    ]
+}
