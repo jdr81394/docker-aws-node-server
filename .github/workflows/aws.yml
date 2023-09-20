@@ -90,28 +90,25 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
       run: | 
-        aws ecs register-task-definition \
-          --family $ECS_TASK_DEFINITION \
-          --network-mode awsvpc \
-          --container-definitions '[
-              {
-                "name": "$CONTAINER_NAME",
-                "image": "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG",
-                "cpu": 1,
-                "memory": 2,
-                "memoryReservation": 1,
-                "portMappings": [
-                  {
-                    "containerPort": 8000
-                  }
-                ],
-                "essential": true,
-                "command": [
-                  "echo",
-                  "command properly passed!"
-                ]
-              }
-            ]'
+        aws ecs register-task-definition --family $ECS_TASK_DEFINITION --network-mode awsvpc --container-definitions '[
+            {
+              "name": "$CONTAINER_NAME",
+              "image": "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG",
+              "cpu": 1,
+              "memory": 2,
+              "memoryReservation": 1,
+              "portMappings": [
+                {
+                  "containerPort": 8000
+                }
+              ],
+              "essential": true,
+              "command": [
+                "echo",
+                "command properly passed!"
+              ]
+            }
+          ]'
 
 
       ### TODO ### 
