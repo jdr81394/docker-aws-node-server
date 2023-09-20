@@ -35,7 +35,7 @@ env:
   ECR_REPOSITORY: docker-aws-node-server          # set this to your Amazon ECR repository name
   ECS_SERVICE: docker-aws-node-server-service-1             # set this to your Amazon ECS service name
   ECS_CLUSTER: docker-aws-node-server-cluster-1                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: docker-aws-node-server-1.0  # set this to the path to your Amazon ECS task definition
+  ECS_TASK_DEFINITION: docker-aws-node-server-1 # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: docker-aws-node-server-container          # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
@@ -90,10 +90,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        aws ecs register-task-definition \
-          --family docker-aws-node-server-1.0  \
-          --network-mode awsvpc \
-          --container-definitions "[{\"name\":\"$CONTAINER_NAME\",\"image\":\"$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG\",\"cpu\":1,\"command\":[\"echo\",\"from yml\"], \"portMappings\":[{\"containerPort\":8000}],\"memory\":2,\"essential\":true}]"
+        aws ecs register-task-definition --family docker-aws-node-server-1 --network-mode awsvpc --container-definitions "[{\"name\":\"$CONTAINER_NAME\",\"image\":\"$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG\",\"cpu\":1,\"command\":[\"echo\",\"from yml\"], \"portMappings\":[{\"containerPort\":8000}],\"memory\":2,\"essential\":true}]"
 
 
       # aws ecs register-task-definition --family $ECS_TASK_DEFINITION --network-mode awsvpc --container-definitions "[{\"name\": \"$CONTAINER_NAME\",\"image\": \"$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG\",\"cpu\": 1,\"memory\": 2,\"memoryReservation\": 1,\"portMappings\": [{\"containerPort\": 8000}],\"essential\": true,}"
