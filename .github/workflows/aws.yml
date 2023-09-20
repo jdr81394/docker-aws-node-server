@@ -93,7 +93,7 @@ jobs:
         aws ecs register-task-definition \
           --family $ECS_TASK_DEFINITION \
           --network-mode awsvpc \
-          --container-definitions "[{\"name\":\"$CONTAINER_NAME\",\"image\":\"$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG\",\"cpu\":1,\"command\":[\"echo\",\"from yml\"], \"portMappings\":[{\"containerPort\": 8000}],\"memory\":2,\"essential\":true}]"
+          --container-definitions "[{\"name\":\"$CONTAINER_NAME\",\"image\":\"$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG\",\"cpu\":1,\"command\":[\"echo\",\"from yml\"], \"portMappings\":[{\"containerPort\":8000}],\"memory\":2,\"essential\":true}]"
 
 
       # aws ecs register-task-definition --family $ECS_TASK_DEFINITION --network-mode awsvpc --container-definitions "[{\"name\": \"$CONTAINER_NAME\",\"image\": \"$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG\",\"cpu\": 1,\"memory\": 2,\"memoryReservation\": 1,\"portMappings\": [{\"containerPort\": 8000}],\"essential\": true,}"
