@@ -91,27 +91,28 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
       run: | 
         aws ecs register-task-definition \
-        --family $ECS_TASK_DEFINITION \
-        --network-mode awsvpc \
-        --container-definitions '[
-          {
-            "name": "$CONTAINER_NAME",
-            "image": "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG",
-            "cpu": 1,
-            "memory": 2,
-            "memoryReservation": 1,
-            "portMappings": [
+          --family $ECS_TASK_DEFINITION \
+          --network-mode awsvpc \
+          --container-definitions |
+            '[
               {
-                "containerPort": 8000
+                "name": "$CONTAINER_NAME",
+                "image": "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG",
+                "cpu": 1,
+                "memory": 2,
+                "memoryReservation": 1,
+                "portMappings": [
+                  {
+                    "containerPort": 8000
+                  }
+                ],
+                "essential": true,
+                "command": [
+                  "echo",
+                  "command properly passed!"
+                ]
               }
-            ],
-            "essential": true,
-            "command": [
-              "echo",
-              "command properly passed!"
-            ]
-          }
-        ]'
+            ]'
 
 
       ### TODO ### 
@@ -125,7 +126,7 @@ jobs:
           --service-name $ECS_SERVICE \
           --task-definition $ECS_TASK_DEFINITION \
           --desired-count 1 \
-          --launch-type EC2 \
+          --launch-type EC2 
           # --network-configuration '{
           #     "awsvpcConfiguration": {
           #       "subnets": 
