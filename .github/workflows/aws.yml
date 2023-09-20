@@ -93,8 +93,7 @@ jobs:
         aws ecs register-task-definition \
           --family $ECS_TASK_DEFINITION \
           --network-mode awsvpc \
-          --container-definitions |
-            '[
+          --container-definitions '[
               {
                 "name": "$CONTAINER_NAME",
                 "image": "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG",
